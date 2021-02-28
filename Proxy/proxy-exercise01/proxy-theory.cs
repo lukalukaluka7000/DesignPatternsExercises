@@ -1,4 +1,5 @@
 ﻿using System;
+using static SubjectAccessor;
 
 // Proxy Pattern              Judith Bishop Dec 2006
 // Shows virtual and protection proxies
@@ -61,7 +62,7 @@ class SubjectAccessor
     }
 }
 
-class Client : SubjectAccessor
+class Client
 {
     static void Main()
     {
