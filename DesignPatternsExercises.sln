@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proxy-exercise01", "Proxy\proxy-ex01\proxy-exercise01.csproj", "{C106310F-B087-49D2-B2BD-A166B2F938C2}"
 EndProject
-
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proxy-exercise02", "Proxy\proxy-ex02\proxy-exercise02.csproj", "{3CEFEF2E-2447-4448-AFBA-8B2DA93AB8EB}"
 EndProject
-
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proxy-exercise03", "Proxy\proxy-ex03\proxy-exercise03.csproj", "{697763B8-7ED1-4DEC-8F8A-0BC30DD2EA9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "decorator-exercise01", "Decorator\decorator-exercise01\decorator-exercise01.csproj", "{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,17 +29,13 @@ Global
 		{697763B8-7ED1-4DEC-8F8A-0BC30DD2EA9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{697763B8-7ED1-4DEC-8F8A-0BC30DD2EA9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{697763B8-7ED1-4DEC-8F8A-0BC30DD2EA9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{C106310F-B087-49D2-B2BD-A166B2F938C2} = {E4A97964-66C2-43BD-84F5-6999A1A463BB}
-		{3CEFEF2E-2447-4448-AFBA-8B2DA93AB8EB} = {6848899A-A048-4EFD-A894-A9BFCD3A356F}
-		{E4A97964-66C2-43BD-84F5-6999A1A463BB} = {EA44246B-51E8-48C1-AC67-0295BCE3049E}
-		{6848899A-A048-4EFD-A894-A9BFCD3A356F} = {EA44246B-51E8-48C1-AC67-0295BCE3049E}
-		{57D27D82-868B-4942-91C6-B43E172DAFFE} = {EA44246B-51E8-48C1-AC67-0295BCE3049E}
-		{697763B8-7ED1-4DEC-8F8A-0BC30DD2EA9C} = {57D27D82-868B-4942-91C6-B43E172DAFFE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10463829-E88B-4BA8-BC82-B6D7D3AA4330}
