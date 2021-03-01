@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proxy-exercise03", "Proxy\p
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "decorator-exercise01", "Decorator\decorator-exercise01\decorator-exercise01.csproj", "{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "decorator-exercise02", "Decorator\decorator-exercise02\decorator-exercise02.csproj", "{AFBA51CF-AC9C-4A01-BB79-EEFCFD4D3A44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89A8DC5C-C26C-45D6-9E5F-E6A57960D22A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFBA51CF-AC9C-4A01-BB79-EEFCFD4D3A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFBA51CF-AC9C-4A01-BB79-EEFCFD4D3A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFBA51CF-AC9C-4A01-BB79-EEFCFD4D3A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFBA51CF-AC9C-4A01-BB79-EEFCFD4D3A44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
