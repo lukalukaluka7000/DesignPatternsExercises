@@ -26,7 +26,7 @@ namespace Given
 }
 namespace decorator_exercise02
 {
-    
+
     class DecoratorPatternExample
     {
         //added other component
@@ -52,27 +52,49 @@ namespace decorator_exercise02
                 e.Graphics.DrawLine(pen, 16, 75, 23, 42);
                 e.Graphics.DrawLine(pen, 22, 25, 16, 42);
                 e.Graphics.DrawLine(pen, 10, 40, 18, 16);
-                
-                
+
+
             }
 
-            
+
         }
         // This simple BorderedPhoto decorator adds a colored BorderedPhoto of fixed size
         class BorderedPhoto : Photo
         {
             Photo photo;
             Color color;
+            bool toggleBorder = false;
 
             public BorderedPhoto(Photo p, Color c)
             {
                 photo = p;
                 color = c;
+ 
+                this.MouseDown += new MouseEventHandler(Form1_MouseClick);
             }
 
             public override void Drawer(Object source, PaintEventArgs e)
             {
                 photo.Drawer(source, e);
+                               
+            }
+            private void Form1_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+            {
+                Point mousePt = new Point(e.X, e.Y);
+                toggleBorder = true ? toggleBorder == false : false;
+
+                if (toggleBorder == true)
+                    this.Paint += new PaintEventHandler(Drawer);
+                else
+                    this.Paint += new PaintEventHandler(BorderRemover);
+
+                Invalidate();
+            }
+
+            private void BorderRemover(Object source, PaintEventArgs e)
+            {
+                photo.Drawer(source, e);
+
                 e.Graphics.DrawRectangle(new Pen(color, 10), 25, 15, 215, 225);
             }
         }
@@ -100,9 +122,9 @@ namespace decorator_exercise02
             {
                 photo.Drawer(source, e);
                 e.Graphics.DrawString(tag,
-                new Font("Arial", 16),
-                new SolidBrush(Color.Black),
-                new PointF(80, 100 + number * 20));
+                    new Font("Arial", 16),
+                    new SolidBrush(Color.Black),
+                    new PointF(80, 100 + number * 20));
             }
 
             public string ListTaggedPhotos()
@@ -143,7 +165,7 @@ namespace decorator_exercise02
             TaggedPhoto personTaggedHominid = new TaggedPhoto(hom, "Littleman");
             BorderedPhoto personTaggedAndBordered = new BorderedPhoto(personTaggedHominid, Color.Pink);
             Application.Run(personTaggedAndBordered);
-            
+
 
             Console.ReadKey();
         }
