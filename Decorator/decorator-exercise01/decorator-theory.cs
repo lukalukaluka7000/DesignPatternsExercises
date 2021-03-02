@@ -74,27 +74,18 @@ namespace decorator_exercise01
             return ComponentMainText;
         }
     }
-    class StreamTrackbarDecorator : Stream
+    interface IStreamTrackbarComponent
+    {
+        int ReadText();
+    }
+    class StreamTrackbarComponent : IStreamTrackbarComponent
     {
         private readonly Stream _bstream;
-        public StreamTrackbarDecorator(BufferedStream bStream)
+        public StreamTrackbarComponent(BufferedStream bStream)
         {
             _bstream = bStream;
         }
-        public override bool CanRead => throw new NotImplementedException();
-
-        public override bool CanSeek => throw new NotImplementedException();
-
-        public override bool CanWrite => throw new NotImplementedException();
-
-        public override long Length => throw new NotImplementedException();
-
-        public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override void Flush()
-        {
-            throw new NotImplementedException();
-        }
+        
         public int ReadText()
         {
             byte[] ba = new byte[_bstream.Length];
@@ -130,49 +121,17 @@ namespace decorator_exercise01
             //}
             return 0;
         }
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            for(int i = 0; i < 100; i++)
-            {
-                _bstream.WriteByte(5);
-            }
-        }
+        
     }
-
-    class StreamPasswordBeforeReadDecorator : Stream
+    interface IStreamPasswordBeforeReadDecorator
+    {
+        int Read(byte[] buffer, int offset, int count);
+    }
+    class StreamPasswordBeforeReadDecorator : IStreamPasswordBeforeReadDecorator
     {
         string password = "amen";
-        public override bool CanRead => throw new NotImplementedException();
 
-        public override bool CanSeek => throw new NotImplementedException();
-
-        public override bool CanWrite => throw new NotImplementedException();
-
-        public override long Length => throw new NotImplementedException();
-
-        public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override void Flush()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int Read(byte[] buffer, int offset, int count)
+        public int Read(byte[] buffer, int offset, int count)
         {
             Console.WriteLine("Enter password before continuing: ");
             if(Console.ReadLine() == password)
@@ -186,21 +145,6 @@ namespace decorator_exercise01
             }
             return -1;
 
-        }
-
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
         }
     }
     class ConsoleDecorator : IComponent //better solution ?
@@ -235,33 +179,33 @@ namespace decorator_exercise01
 
         static void Main()
         {
-            Console.WriteLine("Decorator Pattern\n");
+            //Console.WriteLine("Decorator Pattern\n");
 
-            IComponent component = new Component();
-            Display("1. Basic component: ", component);
-            Display("2. A-decorated : ", new DecoratorA(component));
-            Display("3. B-decorated : ", new DecoratorB(component));
-            Display("4. B-A-decorated : ", new DecoratorB(
-                 new DecoratorA(component)));
-            // Explicit DecoratorB
-            DecoratorB b = new DecoratorB(new Component());
-            Display("5. A-B-decorated : ", new DecoratorA(b));
-            //Invoking its added state and added behaviour
-            Console.WriteLine("\t\t\t" + b.addedState + b.AddedBehavior());
+            //IComponent component = new Component();
+            //Display("1. Basic component: ", component);
+            //Display("2. A-decorated : ", new DecoratorA(component));
+            //Display("3. B-decorated : ", new DecoratorB(component));
+            //Display("4. B-A-decorated : ", new DecoratorB(
+            //     new DecoratorA(component)));
+            //// Explicit DecoratorB
+            //DecoratorB b = new DecoratorB(new Component());
+            //Display("5. A-B-decorated : ", new DecoratorA(b));
+            ////Invoking its added state and added behaviour
+            //Console.WriteLine("\t\t\t" + b.addedState + b.AddedBehavior());
 
-            DecoratorC c = new DecoratorC(component);
-            Display("6. C-decorated : ", c);
+            //DecoratorC c = new DecoratorC(component);
+            //Display("6. C-decorated : ", c);
 
 
-            //ConsoleDecorator.Write("ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
-            ConsoleDecorator.WriteLine("SIZE 15 on ConsoleDecorator: ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+            ////ConsoleDecorator.Write("ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+            //ConsoleDecorator.WriteLine("SIZE 15 on ConsoleDecorator: ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
 
 
             FileStream fs = new FileStream("amen.txt", FileMode.Open, FileAccess.Read);
-            StreamTrackbarDecorator std = new StreamTrackbarDecorator(new BufferedStream(fs));
+            IStreamTrackbarComponent std = new StreamTrackbarComponent(new BufferedStream(fs));
             std.ReadText();
 
-            StreamPasswordBeforeReadDecorator spbrd = new StreamPasswordBeforeReadDecorator();
+            IStreamPasswordBeforeReadDecorator spbrd = new StreamPasswordBeforeReadDecorator();
             spbrd.Read(new byte[] { }, 0, 0);
 
             Console.ReadKey();
