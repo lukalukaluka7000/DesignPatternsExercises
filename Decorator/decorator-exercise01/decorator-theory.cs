@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,12 +74,35 @@ namespace decorator_exercise01
         }
     }
 
+    class ConsoleDecorator : IComponent //better solution ?
+    {
+        public string Operation()
+        {
+            throw new NotImplementedException();
+        }
+        public static void Write(string TextToProcess, int size)
+        {
+            int br = 0;
+            string tempText = TextToProcess;
+            while(TextToProcess.Length > br + size)
+            {
+                Console.WriteLine(tempText.Substring(0, size));
+                tempText = tempText.Substring(size, tempText.Length - size );
+                br += size;
+            }
+            Console.WriteLine(tempText);
+        }
+        public static void WriteLine(string TextToProcess, int size)
+        {
+            Write(TextToProcess, size);
+        }
+    }
     class Client
     {
 
         static void Display(string s, IComponent c)
         {
-            Console.WriteLine(s + c.Operation());
+            ConsoleDecorator.WriteLine(s + c.Operation(), 40);
         }
 
         static void Main()
@@ -99,6 +123,11 @@ namespace decorator_exercise01
 
             DecoratorC c = new DecoratorC(component);
             Display("6. C-decorated : ", c);
+
+
+            //ConsoleDecorator.Write("ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+            ConsoleDecorator.WriteLine("SIZE 15 on ConsoleDecorator: ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+
             Console.ReadKey();
         }
     }
