@@ -186,34 +186,27 @@ namespace decorator_exercise01
 
         static void Main()
         {
-            //Console.WriteLine("Decorator Pattern\n");
+            Console.WriteLine("Decorator Pattern\n");
 
-            //IComponent component = new Component();
-            //Display("1. Basic component: ", component);
-            //Display("2. A-decorated : ", new DecoratorA(component));
-            //Display("3. B-decorated : ", new DecoratorB(component));
-            //Display("4. B-A-decorated : ", new DecoratorB(
-            //     new DecoratorA(component)));
-            //// Explicit DecoratorB
-            //DecoratorB b = new DecoratorB(new Component());
-            //Display("5. A-B-decorated : ", new DecoratorA(b));
-            ////Invoking its added state and added behaviour
-            //Console.WriteLine("\t\t\t" + b.addedState + b.AddedBehavior());
+            IComponent component = new Component();
+            Display("1. Basic component: ", component);
+            Display("2. A-decorated : ", new DecoratorA(component));
+            Display("3. B-decorated : ", new DecoratorB(component));
+            Display("4. B-A-decorated : ", new DecoratorB(
+                 new DecoratorA(component)));
+            // Explicit DecoratorB
+            DecoratorB b = new DecoratorB(new Component());
+            Display("5. A-B-decorated : ", new DecoratorA(b));
+            //Invoking its added state and added behaviour
+            Console.WriteLine("\t\t\t" + b.addedState + b.AddedBehavior());
 
-            //DecoratorC c = new DecoratorC(component);
-            //Display("6. C-decorated : ", c);
-
-
-            ////ConsoleDecorator.Write("ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
-            //ConsoleDecorator.WriteLine("SIZE 15 on ConsoleDecorator: ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+            DecoratorC c = new DecoratorC(component);
+            Display("6. C-decorated : ", c);
 
 
-            //Stream stream;
-            //BufferedStream bf; 
-            ////FileStream fs;
-            //MemoryStream ms;
-            //System.Net.Sockets.NetworkStream ns;
-            //System.Security.Cryptography.CryptoStream cs;
+            //ConsoleDecorator.Write("ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+            ConsoleDecorator.WriteLine("SIZE 15 on ConsoleDecorator: ja sam manistra koja se neda dirati, razumijes li ti mene alo sta je bilo", 15);
+
 
             FileStream fs = new FileStream("amen.txt", FileMode.Open, FileAccess.Read);
             StreamTrackbarDecorator std = new StreamTrackbarDecorator(new BufferedStream(fs));
