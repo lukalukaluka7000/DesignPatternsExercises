@@ -120,7 +120,7 @@ namespace decorator_exercise01
                     {
                         Console.Write(byteCountCtr + "/" + byteSize);
                     }
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                 }
                 Console.Write("|");
             }
@@ -154,6 +154,55 @@ namespace decorator_exercise01
         }
     }
 
+    class StreamPasswordBeforeReadDecorator : Stream
+    {
+        string password = "amen";
+        public override bool CanRead => throw new NotImplementedException();
+
+        public override bool CanSeek => throw new NotImplementedException();
+
+        public override bool CanWrite => throw new NotImplementedException();
+
+        public override long Length => throw new NotImplementedException();
+
+        public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public override void Flush()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            Console.WriteLine("Enter password before continuing: ");
+            if(Console.ReadLine() == password)
+            {
+                Console.WriteLine("Reading can proceed");
+                return 0;
+            }
+            else
+            {
+                Console.WriteLine("Invalid password");
+            }
+            return -1;
+
+        }
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetLength(long value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw new NotImplementedException();
+        }
+    }
     class ConsoleDecorator : IComponent //better solution ?
     {
         public string Operation()
@@ -211,6 +260,9 @@ namespace decorator_exercise01
             FileStream fs = new FileStream("amen.txt", FileMode.Open, FileAccess.Read);
             StreamTrackbarDecorator std = new StreamTrackbarDecorator(new BufferedStream(fs));
             std.ReadText();
+
+            StreamPasswordBeforeReadDecorator spbrd = new StreamPasswordBeforeReadDecorator();
+            spbrd.Read(new byte[] { }, 0, 0);
 
             Console.ReadKey();
         }
