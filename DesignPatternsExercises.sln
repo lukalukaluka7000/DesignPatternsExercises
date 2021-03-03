@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "decorator-exercise02", "Dec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proxy-exercise05", "Proxy\proxy-ex05\proxy-exercise05.csproj", "{0B6FA756-86A6-43AE-AD17-4F42891846FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "adapter-exercise02", "Adapter\adapter-exercise02\adapter-exercise02.csproj", "{DFD8F01D-9498-44C7-B8AD-51EEE7E8D33E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bridge-exercise01", "Bridge\bridge-exercise01\bridge-exercise01.csproj", "{2C230962-9CA9-4153-8887-5E5CFB63326C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{0B6FA756-86A6-43AE-AD17-4F42891846FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B6FA756-86A6-43AE-AD17-4F42891846FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B6FA756-86A6-43AE-AD17-4F42891846FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFD8F01D-9498-44C7-B8AD-51EEE7E8D33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFD8F01D-9498-44C7-B8AD-51EEE7E8D33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFD8F01D-9498-44C7-B8AD-51EEE7E8D33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFD8F01D-9498-44C7-B8AD-51EEE7E8D33E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C230962-9CA9-4153-8887-5E5CFB63326C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C230962-9CA9-4153-8887-5E5CFB63326C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C230962-9CA9-4153-8887-5E5CFB63326C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C230962-9CA9-4153-8887-5E5CFB63326C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
