@@ -43,6 +43,7 @@ namespace adapter_exercise02
                 Add("Welcome to CoolBook " + Name);
             }
 
+
             private void OnFormClosed(object sender, FormClosedEventArgs e)
             {
                 community.Remove(Name);
@@ -50,8 +51,22 @@ namespace adapter_exercise02
 
             private void OnInput(object sender, EventArgs e, string s)
             {
-                Add("\r\n");
-                Add(s, "Poked you");
+                if (((Interact)sender).ActiveControl.Text == "Poke")
+                {
+                    Add("\r\n");
+                    Add(s, "Poked you");
+                }
+                else if (((Interact)sender).ActiveControl.Text == "Super Poke")
+                {
+                    Add("\r\n");
+                    string message = s;
+                    foreach (var user in community)
+                    {
+                        //broadcasting
+                        if (this.Name != user.Key)
+                            Add(user.Key, message);
+                    }
+                }
             }
 
             public new void Poke(string who)
@@ -82,6 +97,7 @@ namespace adapter_exercise02
         {
             public TextBox Wall { get; set; }
             public Button Poke { get; set; }
+            public Button SuperPoke { get; set; }
 
             public Interact() { }
 
@@ -90,8 +106,16 @@ namespace adapter_exercise02
                 Control.CheckForIllegalCrossThreadCalls = true;
                 Poke = new Button();
                 Poke.Text = "Poke";
+
+                SuperPoke = new Button();
+                SuperPoke.Text = "Super Poke";
+                SuperPoke.Location = new Point(100, 0);
                 this.Controls.Add(Poke);
                 Poke.Click += new EventHandler(Input);
+
+                this.Controls.Add(SuperPoke);
+                SuperPoke.Click += new EventHandler(InputSuper);
+
                 Wall = new TextBox();
                 Wall.Multiline = true;
                 Wall.Location = new Point(0, 30);
@@ -110,6 +134,12 @@ namespace adapter_exercise02
                 string who = Wall.SelectedText;
                 if (InputEvent != null)
                     InputEvent(this, EventArgs.Empty, who);
+            }
+            public void InputSuper(object source, EventArgs e)
+            {
+                string message = Wall.SelectedText;
+                if (InputEvent != null)
+                    InputEvent(this, EventArgs.Empty, message);
             }
 
             public void Output(string message)
