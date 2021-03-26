@@ -19,10 +19,9 @@ namespace adapter_exercise02
         //Adapter 
         public class MyCoolBook : MyOpenBook
         {
-            static SortedList<string, MyCoolBook> community =
-                     new SortedList<string, MyCoolBook>(100);
+            
             Interact visuals;
-
+            
             public MyCoolBook(string name) : base(name)
             {
                 // create interact on the relavent thread, and start it!
@@ -32,7 +31,8 @@ namespace adapter_exercise02
                     visuals.FormClosed += new FormClosedEventHandler(OnFormClosed);
                     Application.Run(visuals);
                 }).Start();
-                community[name] = this;
+                
+                
 
                 while (visuals == null)
                 {
@@ -46,7 +46,8 @@ namespace adapter_exercise02
 
             private void OnFormClosed(object sender, FormClosedEventArgs e)
             {
-                community.Remove(Name);
+                Community.Remove(Name);
+                
             }
 
             private void OnInput(object sender, EventArgs e, string s)
@@ -60,7 +61,7 @@ namespace adapter_exercise02
                 {
                     Add("\r\n");
                     string message = s;
-                    foreach (var user in community)
+                    foreach (var user in Community)
                     {
                         //broadcasting
                         if (this.Name != user.Key)
@@ -72,8 +73,10 @@ namespace adapter_exercise02
             public new void Poke(string who)
             {
                 Add("\r\n");
-                if (community.ContainsKey(who))
-                    community[who].Add(Name, "Poked you");
+                if (Community.ContainsKey(who))
+                {
+                    Community[who].Add(Name, "Poked you");
+                }
                 else
                     Add("Friend " + who + " is not part of the community");
             }
@@ -82,11 +85,15 @@ namespace adapter_exercise02
             {
                 visuals.Output(message);
             }
+            //public void Print(string messag)
+            //{
+            //    visuals.Output(messag);
+            //}
 
             public new void Add(string friend, string message)
             {
-                if (community.ContainsKey(friend))
-                    community[friend].Add(Name + " : " + message);
+                if (Community.ContainsKey(friend))
+                    Community[friend].Add(Name + " : " + message);
                 else
                     Add("Friend " + friend + " is not part of the community");
             }
@@ -164,13 +171,14 @@ namespace adapter_exercise02
         // CANNOT CHANGE
         public class SpaceBook
         {
-            static SortedList<string, SpaceBook> community =
-                  new SortedList<string, SpaceBook>(100);
-            string pages;
+            //public static SortedList<string, SpaceBook> community =
+            //      new SortedList<string, SpaceBook>(100);
+            public static SortedList<string, SpaceBook> community { get; set; } = new SortedList<string, SpaceBook>(100);
+            public string pages;
             string name;
             string gap = "\n\t\t\t\t";
 
-            static public bool Unique(string name)
+            public bool Unique(string name)
             {
                 return community.ContainsKey(name);
             }
@@ -198,6 +206,8 @@ namespace adapter_exercise02
             {
                 community[who].pages += gap + friend + " poked you";
             }
+
+           
         }
 
         // Target (Adapter Pattern)
@@ -208,12 +218,14 @@ namespace adapter_exercise02
             SpaceBook myOpenBook;
             public string Name { get; set; }
             public static int Users { get; set; }
+            public static SortedList<string, SpaceBook> Community;
 
             public MyOpenBook(string n)
             {
                 Name = n;
                 Users++;
-                myOpenBook = new SpaceBook(Name + "-" + Users);
+                myOpenBook = new SpaceBook(Name);
+                Community = SpaceBook.community;
             }
 
             public void Add(string message)
