@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,6 +59,7 @@ namespace iterator_exercise01
     class Tree<T>
     {
         Node<T> root;
+        private int _totalKbSize = 0;
         public Tree() { }
         public Tree(Node<T> head) { root = head; }
 
@@ -108,6 +110,51 @@ namespace iterator_exercise01
                     yield return node;
             }
         }
+
+        
+        public int TotalKbSize
+        {
+            get
+            {
+                return _totalKbSize;
+            }
+        }
+            
+        public IEnumerable<T> Postorder // L R root
+        {
+            get
+            {
+                return ScanPostorder(root);
+            }
+        }
+        private IEnumerable<T> ScanPostorder(Node<T> root)
+        {
+
+            if (root.Left != null)
+            {
+                foreach (T node in ScanPostorder(root.Left))
+                    yield return node;
+            }
+            if (root.Right != null)
+            {
+                foreach (T node in ScanPostorder(root.Right))
+                    yield return node;
+            }
+
+            Type t = root.GetType();
+            PropertyInfo prop = t.GetProperty("DirectoryData");
+            object list = prop.GetValue(root);
+
+            Type files = list.GetType();
+            PropertyInfo propFiles = files.GetProperty("Files");
+            List<File> filesInCurrentRoot = (List<File>)propFiles.GetValue(list);
+            if(filesInCurrentRoot.Count > 0)
+            {
+                foreach (var v in filesInCurrentRoot)
+                    _totalKbSize += v.KbSize;
+            }
+            yield return root.DirectoryData;
+        }
     }
     class IteratorPattern01
     {
@@ -155,14 +202,21 @@ namespace iterator_exercise01
                     )
 
             );
-            //printout may differ from expected cause this is not strictly binary tree
+            
             Console.WriteLine("Preorder ( root L R ):");
             foreach (Directory d in directories.PreOrder)
                 Console.WriteLine(d);
             Console.WriteLine("\nInorder ( L root R ):");
             foreach (Directory d in directories.InOrder)
                 Console.WriteLine(d);
-     
+
+            //printout may differ from expected cause this is not strictly binary tree always have left and right until comes to the last :/
+            Console.WriteLine("\nPostorder ( L R root ):");
+            foreach (Directory d in directories.Postorder)
+                Console.WriteLine(d );
+           
+            //IEnumerable<int>
+            //IEnumerator<int>
             Console.ReadKey();
         }
     }
