@@ -317,4 +317,14 @@ namespace StatePattern
     }
 }
 
-
+//Question02:
+//The short answer: An abstract class allows you to create functionality that subclasses can implement or
+//    override. An interface only allows you to define functionality, not implement it. And whereas a
+//    class can extend only one abstract class, it can take advantage of multiple interfaces.
+// If we had more than one kind of states that could be implemented by same State, which i do not know right now if it is legal in State pattern
+// then interfaces could be useful... Abstract classes are more comaptible here even though we could have been using interfaces. BEcause we
+// can impleent some general function that doesn't need overriding in user class, which is more general...
+//Exercise03:
+//Not gonna implement this. State would be flyer levels. There would be many inefrequent changes in states. When calcualtion is done than it is checking
+//if it meets criteteria for entering another level.Calculation would be done insdie context which has all data it needs for getting info about flyer.
+//
