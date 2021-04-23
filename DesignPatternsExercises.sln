@@ -51,6 +51,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Observer", "Observer", "{C6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "observer-exercise01", "Observer\observer-exercise01\observer-exercise01.csproj", "{37B53AD7-FA54-4A29-9CE2-3DAA0D1C890B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "State", "State", "{07F335D3-9368-4474-8FD4-B3A0441B2877}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "state-exercise01", "State\state-exercise01\state-exercise01.csproj", "{7A22FEA2-8171-4110-BA02-F45769DC6590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +121,10 @@ Global
 		{37B53AD7-FA54-4A29-9CE2-3DAA0D1C890B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B53AD7-FA54-4A29-9CE2-3DAA0D1C890B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37B53AD7-FA54-4A29-9CE2-3DAA0D1C890B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A22FEA2-8171-4110-BA02-F45769DC6590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A22FEA2-8171-4110-BA02-F45769DC6590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A22FEA2-8171-4110-BA02-F45769DC6590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A22FEA2-8171-4110-BA02-F45769DC6590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +145,7 @@ Global
 		{ABA0C2DD-A53C-4000-AB1C-54D864A39B21} = {5E8AEE2C-5802-4194-91FA-8DBD618800CC}
 		{038DF08C-BA90-4ED3-8482-64B2DBE26FF2} = {5E8AEE2C-5802-4194-91FA-8DBD618800CC}
 		{37B53AD7-FA54-4A29-9CE2-3DAA0D1C890B} = {C6EF3FBF-F432-493F-B435-B3C3CE34A2F3}
+		{7A22FEA2-8171-4110-BA02-F45769DC6590} = {07F335D3-9368-4474-8FD4-B3A0441B2877}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10463829-E88B-4BA8-BC82-B6D7D3AA4330}
