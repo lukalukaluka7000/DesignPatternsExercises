@@ -12,16 +12,22 @@ namespace Strategy
     // Gives a choice of sort routines to display
     // Algorithms and GUI adapted from a Java system at
     // http://www.geocities.com/SiliconValley/Network/1854/Sort1.html
-
+    public enum TipPod
+    {
+        Big,
+        Others
+    };
     static class StartSetGenerator
     {
+        
         private static List<int> myList;
+        public static TipPod tipPodatka = (TipPod)Enum.Parse(typeof(TipPod), "Others");
 
         // Check the Iterator Pattern for a different version
         public static IEnumerable<int> GetStartSet()
         {
             const int n = 200; // how many values to generate
-            if (myList == null)
+            myList = new List<int>();
             {
                 List<int> list = new List<int>();
                 Random randomGenerator = new Random();
@@ -32,20 +38,41 @@ namespace Strategy
 
                 while (range.Count > 0)
                 {
-                    int item = range[randomGenerator.Next(range.Count)];
+                    dynamic item = range[randomGenerator.Next(range.Count)];
                     list.Add(item);
                     range.Remove(item);
                 }
                 myList = list;
             }
+            tipPodatka = TipPod.Others;
+            return myList;
+        }
+        public static IEnumerable<int> GetVeryBigData()
+        {
+            const int n = 1000; // how many values to generate
+            myList = new List<int>();
+            
+            List<int> list = new List<int>();
+            Random randomGenerator = new Random();
+
+            List<int> range = new List<int>();
+            for (int i = 0; i < n; i++)
+                range.Add(i);
+
+            while (range.Count > 0)
+            {
+                dynamic item = range[randomGenerator.Next(range.Count)];
+                list.Add(item);
+                range.Remove(item);
+            }
+            myList = list;
+            tipPodatka = TipPod.Big;
             return myList;
         }
     }
 
-    class StrategyView<T> : Form
-      where T : IComparable<T>
+    class StrategyView<T> : Form where T : IComparable<T>
     {
-
         PictureBox pb;
         Func<IEnumerable<T>> Generator;
 
@@ -60,11 +87,14 @@ namespace Strategy
             pb.Dock = DockStyle.Fill;
             pb.BackColor = Color.White;
             pb.BorderStyle = BorderStyle.Fixed3D;
+            pb.Width = 1005;
+            pb.Height = 1005;
+            this.Size = new Size(1100, 1100);
             this.Controls.Add(pb);
 
             TableLayoutPanel p = new TableLayoutPanel();
             p.RowCount = 1;
-            p.ColumnCount = 3;
+            p.ColumnCount = 5;
             p.Dock = DockStyle.Top;
             this.Controls.Add(p);
 
@@ -86,25 +116,41 @@ namespace Strategy
             b.Text = "Reversed";
             p.Controls.Add(b);
 
+            b = new Button();
+            b.Name = "PartiallySorted";
+            b.Click += new EventHandler(ButtonClick);
+            b.Text = "PartiallySorted";
+            p.Controls.Add(b);
+
+            b = new Button();
+            b.Name = "VeryBigData";
+            b.Click += new EventHandler(ButtonClick);
+            b.Text = "BigData";
+            p.Controls.Add(b);
+
             p.Height = b.Height + 4;
+            p.Width = b.Width + 50;
             this.DoubleBuffered = true;
             this.ResumeLayout(true);
         }
 
-        public void DrawGraph(IEnumerable<T> list)
+        public void DrawGraph(IEnumerable<T> list )
         {
+            int offSet = GetOffsetBasedOnData();
             if (pb.Image == null)
-                pb.Image = new Bitmap(pb.Width, pb.Height);
+                pb.Image = new Bitmap(1100, 1100);
             Graphics g = Graphics.FromImage(pb.Image);
             g.Clear(Color.White);
-            g.DrawRectangle(Pens.Blue, 19, 19, 202, 202);
+            g.DrawRectangle(Pens.Blue, 19, 19, 1002, 1002);
             g.Dispose();
+            
             Bitmap b = pb.Image as Bitmap;
 
             // Plots the index x against the value val of all elements in the list
             // IEnumerable<T>.Count is an extension
             int listSize = list.Count();
             int x = 0;
+            
             foreach (T item in list)
             {
                 // val must be an integer. The as conversion needs it
@@ -113,13 +159,27 @@ namespace Strategy
                 if (!val.HasValue)
                     val = 0;
                 // Drawing methods do not handle nullable types
-                b.SetPixel(x + 20, 20 + 200 - ((int)val), Color.Black);
+                b.SetPixel(x + 20, 20 + offSet - ((int)val), Color.Red);
+
                 x++;
             }
 
             this.Refresh();
             Thread.Sleep(100);
             Application.DoEvents();
+        }
+
+        private int GetOffsetBasedOnData()
+        {
+            switch(StartSetGenerator.tipPodatka)
+            {
+                case TipPod.Big:
+                    return 1000;
+                case TipPod.Others:
+                    return 200;
+                default:
+                    return -1;
+            }
         }
 
         // Selecting the Strategy
@@ -130,23 +190,44 @@ namespace Strategy
                 case "LargeItems": return new MergeSorter<T>();
                 case "SmallItems": return new QuickSorter<T>();
                 case "ReversedList": return new MergeSorter<T>();
+                case "PartiallySorted": return new QuickSorter<T>();
+                case "VeryBigData": return new MergeSorter<T>();
                 default: return null;
             }
         }
-
+        void SetGenerator(string typeOfData)
+        {
+            switch (typeOfData)
+            {
+                case "VeryBigData"://return StartSetGenerator<int>.GetVeryBigData;
+                    //Generator = StartSetGenerator<int>.GetVeryBigData;
+                    Func<IEnumerable<int>> func =  StartSetGenerator.GetVeryBigData;
+                    Generator = (Func<IEnumerable<T>>)func;
+                    return;
+                case "LargeItems":
+                    Func<IEnumerable<int>> func2 = StartSetGenerator.GetStartSet;
+                    Generator = (Func<IEnumerable<T>>)func2;
+                    return;
+                default:
+                    return ;
+                
+            }
+        }
         // The Context
         void ButtonClick(object sender, EventArgs e)
         {
             Button control = sender as Button;
+            SetGenerator(control.Name);
+            IEnumerable<T> newList = Generator();
             SortStrategy<T> strategy = SelectStrategy(control.Name);
-            IEnumerable<T> newlist = Generator();
-            DrawGraph(newlist);
+            
+            DrawGraph(newList );
             if (strategy == null)
                 return;
 
             // DrawGraph will be invoked during sorting when the UpdateUI event is triggered
             strategy.UpdateUI += new Action<IEnumerable<T>>(DrawGraph);
-            strategy.Sort(newlist);
+            strategy.Sort(newList);
         }
     }
 
@@ -158,10 +239,8 @@ namespace Strategy
     }
 
     // Strategy 1
-    class MergeSorter<T> : SortStrategy<T>
-      where T : IComparable<T>
+    class MergeSorter<T> : SortStrategy<T> where T : IComparable<T>
     {
-
         public event Action<IEnumerable<T>> UpdateUI;
 
         List<T> aux;
