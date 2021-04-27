@@ -477,3 +477,6 @@ namespace Strategy
         }
     }
 }
+//ex02: thanks but no thanks
+//ex03: input of each field using Strategy?! - will implement this when have undesranding of what they mean by this
+// strategies of inputing email and password? or which to use?
