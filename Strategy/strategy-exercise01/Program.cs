@@ -28,22 +28,21 @@ namespace Strategy
         {
             const int n = 200; // how many values to generate
             myList = new List<int>();
+
+            List<int> list = new List<int>();
+            Random randomGenerator = new Random();
+
+            List<int> range = new List<int>();
+            for (int i = 0; i < n; i++)
+                range.Add(i);
+
+            while (range.Count > 0)
             {
-                List<int> list = new List<int>();
-                Random randomGenerator = new Random();
-
-                List<int> range = new List<int>();
-                for (int i = 0; i < n; i++)
-                    range.Add(i);
-
-                while (range.Count > 0)
-                {
-                    dynamic item = range[randomGenerator.Next(range.Count)];
-                    list.Add(item);
-                    range.Remove(item);
-                }
-                myList = list;
+                dynamic item = range[randomGenerator.Next(range.Count)];
+                list.Add(item);
+                range.Remove(item);
             }
+            myList = list;
             tipPodatka = TipPod.Others;
             return myList;
         }
@@ -87,9 +86,7 @@ namespace Strategy
             pb.Dock = DockStyle.Fill;
             pb.BackColor = Color.White;
             pb.BorderStyle = BorderStyle.Fixed3D;
-            pb.Width = 1005;
-            pb.Height = 1005;
-            this.Size = new Size(1100, 1100);
+            UpdatePictureSize();
             this.Controls.Add(pb);
 
             TableLayoutPanel p = new TableLayoutPanel();
@@ -129,19 +126,26 @@ namespace Strategy
             p.Controls.Add(b);
 
             p.Height = b.Height + 4;
-            p.Width = b.Width + 50;
             this.DoubleBuffered = true;
             this.ResumeLayout(true);
+        }
+
+        private void UpdatePictureSize()
+        {
+            int size = GetOffsetBasedOnData();
+            pb.Width = size + 20;
+            pb.Height = size + 20;
         }
 
         public void DrawGraph(IEnumerable<T> list )
         {
             int offSet = GetOffsetBasedOnData();
-            if (pb.Image == null)
-                pb.Image = new Bitmap(1100, 1100);
+            int size = offSet + 20;
+            //if (pb.Image == null)
+            pb.Image = new Bitmap(size, size);
             Graphics g = Graphics.FromImage(pb.Image);
             g.Clear(Color.White);
-            g.DrawRectangle(Pens.Blue, 19, 19, 1002, 1002);
+            g.DrawRectangle(Pens.Blue, 19, 19, size, size);
             g.Dispose();
             
             Bitmap b = pb.Image as Bitmap;
@@ -153,9 +157,15 @@ namespace Strategy
             
             foreach (T item in list)
             {
+                
                 // val must be an integer. The as conversion needs it
                 // also to be a non-nullable, which is checked by the ?
                 int? val = item as int?;
+                if(val == 0)
+                {
+                    x++;
+                    continue;
+                }
                 if (!val.HasValue)
                     val = 0;
                 // Drawing methods do not handle nullable types
@@ -203,10 +213,12 @@ namespace Strategy
                     //Generator = StartSetGenerator<int>.GetVeryBigData;
                     Func<IEnumerable<int>> func =  StartSetGenerator.GetVeryBigData;
                     Generator = (Func<IEnumerable<T>>)func;
+                    StartSetGenerator.tipPodatka = TipPod.Big;
                     return;
                 case "LargeItems":
                     Func<IEnumerable<int>> func2 = StartSetGenerator.GetStartSet;
                     Generator = (Func<IEnumerable<T>>)func2;
+                    StartSetGenerator.tipPodatka = TipPod.Others;
                     return;
                 default:
                     return ;
@@ -217,7 +229,9 @@ namespace Strategy
         void ButtonClick(object sender, EventArgs e)
         {
             Button control = sender as Button;
+            
             SetGenerator(control.Name);
+            UpdatePictureSize();
             IEnumerable<T> newList = Generator();
             SortStrategy<T> strategy = SelectStrategy(control.Name);
             
