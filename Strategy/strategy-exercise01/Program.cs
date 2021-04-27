@@ -92,23 +92,22 @@ namespace Strategy
         }
         public static IEnumerable<int> GetPartiallySorted()
         {
-            const int n = 200; // how many values to generate
             myList = new List<int>();
 
             List<int> list = new List<int>();
             Random randomGenerator = new Random();
 
-            List<int> range = new List<int>();
-            for (int i = 0; i < n; i++)
-                range.Add(i);
-
             int J = 0;
-            while (range.Count > 0)
+            while (J != 200)
             {
                 dynamic offset = randomGenerator.Next(-10,10);
                 int ToInsert = offset + J++;
-                list.Add(ToInsert);
-                range.Remove(ToInsert);
+                if(J > 30 && J < 170)
+                {
+                    list.Add(ToInsert);
+                    continue;
+                }
+                list.Add(J);
             }
             myList = list;
             tipPodatka = TipPod.Others;
@@ -247,7 +246,7 @@ namespace Strategy
                 case "LargeItems": return new MergeSorter<T>();
                 case "SmallItems": return new QuickSorter<T>();
                 case "ReversedList": return new MergeSorter<T>();
-                case "PartiallySorted": return new QuickSorter<T>();
+                case "PartiallySorted": return new MergeSorter<T>();
                 case "VeryBigData": return new MergeSorter<T>();
                 default: return null;
             }
