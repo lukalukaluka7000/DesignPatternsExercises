@@ -68,6 +68,53 @@ namespace Strategy
             tipPodatka = TipPod.Big;
             return myList;
         }
+        public static IEnumerable<int> GetReversed()
+        {
+            const int n = 200; // how many values to generate
+            myList = new List<int>();
+
+            List<int> list = new List<int>();
+            Random randomGenerator = new Random();
+
+            List<int> range = new List<int>();
+            for (int i = 0; i < n; i++)
+                range.Add(i);
+
+            int J = range.Count()-1;
+            while (range.Count > 0)
+            {
+                list.Add(J);
+                range.Remove(J--);
+            }
+            myList = list;
+            tipPodatka = TipPod.Others;
+            return myList;
+        }
+        public static IEnumerable<int> GetPartiallySorted()
+        {
+            const int n = 200; // how many values to generate
+            myList = new List<int>();
+
+            List<int> list = new List<int>();
+            Random randomGenerator = new Random();
+
+            List<int> range = new List<int>();
+            for (int i = 0; i < n; i++)
+                range.Add(i);
+
+            int J = 0;
+            while (range.Count > 0)
+            {
+                dynamic offset = randomGenerator.Next(-10,10);
+                int ToInsert = offset + J++;
+                list.Add(ToInsert);
+                range.Remove(ToInsert);
+            }
+            myList = list;
+            tipPodatka = TipPod.Others;
+            return myList;
+        }
+        
     }
 
     class StrategyView<T> : Form where T : IComparable<T>
@@ -220,6 +267,23 @@ namespace Strategy
                     Generator = (Func<IEnumerable<T>>)func2;
                     StartSetGenerator.tipPodatka = TipPod.Others;
                     return;
+
+                case "SmallItems":
+                    Func<IEnumerable<int>> func3 = StartSetGenerator.GetStartSet;
+                    Generator = (Func<IEnumerable<T>>)func3;
+                    StartSetGenerator.tipPodatka = TipPod.Others;
+                    return;
+                case "ReversedList":
+                    Func<IEnumerable<int>> func4 = StartSetGenerator.GetReversed;
+                    Generator = (Func<IEnumerable<T>>)func4;
+                    StartSetGenerator.tipPodatka = TipPod.Others;
+                    return;
+                case "PartiallySorted":
+                    Func<IEnumerable<int>> func5 = StartSetGenerator.GetPartiallySorted;
+                    Generator = (Func<IEnumerable<T>>)func5;
+                    StartSetGenerator.tipPodatka = TipPod.Others;
+                    return;
+
                 default:
                     return ;
                 
