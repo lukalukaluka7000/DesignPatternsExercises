@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include "NLetsCountApp.h"
 bool CombContainedInRow(std::vector<int> komb, std::vector<int> trenutniRedak) {
 
 
@@ -71,6 +72,34 @@ std::vector<std::vector<T>> combo(const std::vector<T> c, int k)
     }
     return nLets;
 }
+void PreetyPrint(std::map<std::vector<int>, int>& duplets)
+{
+    std::cout << std::endl;
+    for (auto elem : duplets)
+    {
+        for (int vecElem : elem.first) {
+            std::cout << vecElem << " ";
+        }
+        std::cout << "    ----> " << elem.second << " puta";
+        std::cout << std::endl;
+    }
+}
+
+void FillNlets(std::vector<std::vector<int>>& insertedCombinations, std::vector<int> redakToCompareTo, std::map<std::vector<int>, int>& currentNlet)
+{
+    for (const std::vector<int> komb : insertedCombinations) {
+
+        if (CombContainedInRow(komb, redakToCompareTo)) {
+            if (currentNlet.find(komb) == currentNlet.end()) {
+                currentNlet[komb] = 1;
+            }
+            else {
+                currentNlet[komb] += 1;
+            }
+        }
+
+    }
+}
 int main()
 {
     //vector<int> data_1{ 10, 20, 30, 40 };
@@ -83,45 +112,58 @@ int main()
     std::map<std::vector<int>, int> quatrets;
     std::map<std::vector<int>, int> quintets;
 
-    for (int i = 0; i < retci.size(); i++) {
+    for (int i = 0; i < retci.size() ; i++) {
         // vector<vector<int>> vec{ { 1, 2, 3 }, 
                                  // { 4, 5, 6 }, 
                                  // { 7, 8, 9, 4 } }; 
         //std::vector<std::vector<int>> kombe = getDuplets(retci[i]);
         std::vector<std::vector<int>> kombe2 = combo(retci[i], 2);
         std::vector<std::vector<int>> kombe3 = combo(retci[i], 3);
+        std::vector<std::vector<int>> kombe4 = combo(retci[i], 4);
+        std::vector<std::vector<int>> kombe5 = combo(retci[i], 5);
+        
+        
+        for (int j = i + 1; j < retci.size(); j++) {
 
-        for(const std::vector<int> komb : kombe2) {
-
-            for (int j = i + 1; j < retci.size(); j++) {
-
-                if (CombContainedInRow(komb, retci[j])) {
-                    if (duplets.find(komb) == duplets.end()) {
-                        duplets[komb] = 2; // found for tha first time, but in both rows, therefore 2 repetirions
-                    }
-                    else {
-                        duplets[komb] += 1;
-                    }
-                }
-
-            }
-
+            FillNlets(kombe2, retci[j], duplets);
+            FillNlets(kombe3, retci[j], triplets);
+            FillNlets(kombe4, retci[j], quatrets);
+            FillNlets(kombe5, retci[j], quintets);
         }
-        for (const std::vector<int> komb : kombe3) {
-
-            for (int j = i + 1; j < retci.size(); j++) {
-
-                if (CombContainedInRow(komb, retci[j])) {
-                    if (triplets.find(komb) == triplets.end()) {
-                        triplets[komb] = 2; // found for tha first time, but in both rows, therefore 2 repetirions
-                    }
-                    else {
-                        triplets[komb] += 1;
-                    }
-                }
-
-            }
-
+        
+    }
+    FinishingTouches(duplets);
+    FinishingTouches(triplets);
+    FinishingTouches(quatrets);
+    FinishingTouches(quintets);
+    std::cout << "Npr. ovi brojevi su u sheet2" << std::endl;
+    for (auto elem : retci)
+    {
+        for (int vecElem : elem) {
+            std::cout << vecElem << " ";
         }
+        std::cout << std::endl;
+    }
+    PreetyPrint(duplets);
+    PreetyPrint(triplets);
+    PreetyPrint(quatrets);
+    PreetyPrint(quintets);
+    int d;
+    std::cin >> d;
+}
+
+void FinishingTouches(std::map<std::vector<int>, int>& nlet)
+{
+    for (auto vec : nlet) {
+        if (vec.second == 1)
+            vec.second = 2; 
+    }
+    int index = 0;
+    for (auto it = nlet.cbegin(); it != nlet.cend(); ++it, index++)
+    {
+        if (it->second == 1)
+            nlet[it->first] = 2; // found only one pair, but in both rows, therefore 2 repetirions
     }
 }
+
+
