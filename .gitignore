@@ -13,6 +13,8 @@
 *.sln.docstates
 
 # Build results
+Debug
+NletsCountApp/NletsCountApp/Debug
 [Dd]ebug/
 [Rr]elease/
 x64/
