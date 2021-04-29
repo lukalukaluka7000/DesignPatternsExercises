@@ -225,7 +225,7 @@ namespace Strategy
             }
         }
     }
-
+    
     // Strategy 2
     class QuickSorter<T> : SortStrategy<T>
       where T : IComparable<T>
@@ -308,6 +308,44 @@ namespace Strategy
         }
     }
 }
-//ex02: thanks but no thanks
-//ex03: input of each field using Strategy?! - will implement this when have undesranding of what they mean by this
-// strategies of inputing email and password? or which to use?
+//ex02: IComparable has a method named as CompareTo & has only 1 parameter. Because it compares
+//the current object with the next object which is coming as a parameter. Hence current object CompareTo next object.
+//But IComparer has 2 parameters because we are going to pass both of the objects as arguments
+//IComparable<T> Interface
+//Assemblies: mscorlib.dll
+//Defines a generalized comparison method that a value type or class implements to create a 
+//    type-specific comparison method for ordering or sorting its instances.
+//    public interface IComparable<in T>
+//Type Parameters T
+//The type of object to compare.
+//This type parameter is contravariant. That is, you can use either the type you
+//specified or any type that is less derived. For more information about covariance
+//and contravariance, see Covariance and Contravariance in Generics.
+
+//CompareTo(T), that indicates whether the position of the current instance in the sort
+//order is before, after, or the same as a second object of the same type. Typically,
+//the method is not called directly from developer code. Instead, it is called automatically
+//by methods such as List<T>.Sort() and Add.
+//Typically, types that provide an IComparable<T> implementation also
+//implement the IEquatable<T> interface. The IEquatable<T> interface
+//defines the Equals method, which determines the equality of instances of the implementing type.
+
+//ima ih jos mnogo, vrijedi sompenuti ih par: npr IDisposable koji omogucava da se objekt klase koja
+//implementira ovaj interface releasea memoriju koja nije "zbrinuta"
+// obicaj je pozvati Dispose kao jedinu funkciju tog interfacea u destruktoru
+//Performs application-defined tasks associated with freeing, releasing, or resetting
+//     unmanaged resources.
+// Use C# destructor syntax for finalization code.
+// This destructor will run only if the Dispose method
+// does not get called.
+// It gives your base class the opportunity to finalize.
+// Do not provide destructors in types derived from this class.
+//~MyResource()
+//        {
+//    // Do not re-create Dispose clean-up code here.
+//    // Calling Dispose(false) is optimal in terms of
+//    // readability and maintainability.
+//    Dispose(false);
+//}
+//Others: ICloneable, IComparable, IComparable<T>, IConvertible, ICustomFormatter, IEquatable <T>
+//      IFormatProvider, IFormattable...
