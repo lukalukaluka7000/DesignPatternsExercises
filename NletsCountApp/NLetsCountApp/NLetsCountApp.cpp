@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 #include "NLetsCountApp.h"
+#include "Factory.h"
+#include "IOManager.h"
 bool CombContainedInRow(std::vector<int> komb, std::vector<int> trenutniRedak) {
 
 
@@ -102,11 +104,12 @@ void FillNlets(std::vector<std::vector<int>>& insertedCombinations, std::vector<
 }
 int main()
 {
-    //vector<int> data_1{ 10, 20, 30, 40 };
-    //vis[data_1] = 1;
-    //std::vector<std::vector<int>> retci{ {1,2,5,7,8,9},{2,6,7,8,10,13}, {2,7,50,51,52,53} };
-    std::vector<std::vector<int>> retci{ {1,2,5,7,8,9},{1,2,5,8,10,13}, {1,2,3,4,5,53} };
+    IOManager* mng = new IOManager();
+    Factory* factory = Factory::makeFactory(mng->readFile());
+    delete(mng);
 
+    std::vector<std::vector<int>> retci = factory->data();
+    
     std::map<std::vector<int>, int> duplets;
     std::map<std::vector<int>, int> triplets;
     std::map<std::vector<int>, int> quatrets;
@@ -136,7 +139,7 @@ int main()
     FinishingTouches(triplets);
     FinishingTouches(quatrets);
     FinishingTouches(quintets);
-    std::cout << "Npr. ovi brojevi su u sheet2" << std::endl;
+
     for (auto elem : retci)
     {
         for (int vecElem : elem) {

@@ -148,10 +148,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ExcelData.cpp" />
+    <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="IOManager.cpp" />
     <ClCompile Include="NLetsCountApp.cpp" />
+    <ClCompile Include="RawData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ExcelData.h" />
+    <ClInclude Include="Factory.h" />
+    <ClInclude Include="IOManager.h" />
     <ClInclude Include="NLetsCountApp.h" />
+    <ClInclude Include="RawData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
