@@ -43,3 +43,6 @@ std::vector<std::vector<int>> ExcelData::data()
 	}
     return excelData;
 }
+void ExcelData::write() {
+    return;
+}

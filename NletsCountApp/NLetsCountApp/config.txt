@@ -1,1 +1,1 @@
-FetchDataMode=excel
+FetchDataMode=raw

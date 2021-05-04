@@ -74,18 +74,6 @@ std::vector<std::vector<T>> combo(const std::vector<T> c, int k)
     }
     return nLets;
 }
-void PreetyPrint(std::map<std::vector<int>, int>& duplets)
-{
-    std::cout << std::endl;
-    for (auto elem : duplets)
-    {
-        for (int vecElem : elem.first) {
-            std::cout << vecElem << " ";
-        }
-        std::cout << "    ----> " << elem.second << " puta";
-        std::cout << std::endl;
-    }
-}
 
 void FillNlets(std::vector<std::vector<int>>& insertedCombinations, std::vector<int> redakToCompareTo, std::map<std::vector<int>, int>& currentNlet)
 {
@@ -147,10 +135,14 @@ int main()
         }
         std::cout << std::endl;
     }
-    PreetyPrint(duplets);
-    PreetyPrint(triplets);
-    PreetyPrint(quatrets);
-    PreetyPrint(quintets);
+
+    factory->setNlet(duplets);
+    factory->setNlet(triplets);
+    factory->setNlet(quatrets);
+    factory->setNlet(quintets);
+
+    factory->write();
+
     int d;
     std::cin >> d;
 }
