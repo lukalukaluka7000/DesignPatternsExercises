@@ -5,13 +5,16 @@
 #define FirstRowData 13
 #define FirstColData 6
 #define LastColData 12
+
+#define WriteStartRow 2
+#define WriteStartCol 2
 std::vector<std::vector<int>> ExcelData::data()
 {
     std::vector<std::vector<int>> excelData;
-	libxl::Book* book = xlCreateBook();
 
-	if (book->load(L"Debug\\testExcel.xls")) {
-		libxl::Sheet* sheet = book->getSheet(1);
+	if (_book->load(L"Debug\\testExcel.xls")) {
+		libxl::Sheet* sheet = _book->getSheet(1);
+
 		if (sheet) {
 
 			for (int row = FirstRowData; row < sheet->lastRow(); ++row) {
@@ -44,5 +47,34 @@ std::vector<std::vector<int>> ExcelData::data()
     return excelData;
 }
 void ExcelData::write() {
-    return;
+    int currentRow = WriteStartRow;
+    int currentCol = WriteStartCol;
+
+    if (_book->load(L"Debug\\testExcel.xls")) {
+        
+        libxl::Sheet* sheet = _book->getSheet(5); // duplets
+        if (sheet) {
+            
+            for (auto elem : _duplets) {
+                currentCol = WriteStartCol;
+                for (int vecElem : elem.first) {
+                    sheet->writeNum(currentRow, currentCol++, vecElem);
+                }
+                currentRow++;
+            }
+
+        }
+    }
+    _book->save(L"Debug\\testExcel.xls");
+    _book->release();
+
+    std::cout << std::endl;
+    for (auto elem : _duplets)
+    {
+        for (int vecElem : elem.first) {
+            std::cout << vecElem << " ";
+        }
+        std::cout << "    ----> " << elem.second << " puta";
+        std::cout << std::endl;
+    }
 }
