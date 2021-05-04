@@ -28,9 +28,13 @@ std::vector<std::vector<int>> ExcelData::data()
                         case libxl::CELLTYPE_EMPTY: break;
                         case libxl::CELLTYPE_NUMBER:
                         {
+                            if (excelData.size() == 50) {
+                                std::cout << std::endl;
+                            }
                             std::wcout << "(" << row << ", " << col << ") = ";
-                            int d = sheet->readNum(row, col);
-                            currentRow.push_back(d);
+                            double d = sheet->readNum(row, col);
+                            currentRow.push_back(int(d));
+
                             std::cout << d << " [number]" << std::endl;
                             break;
                         }
@@ -40,6 +44,8 @@ std::vector<std::vector<int>> ExcelData::data()
                         case libxl::CELLTYPE_ERROR:  break;
                     }
 				}
+                if (currentRow.empty())
+                    break;
                 excelData.push_back(currentRow);
 			}
 
