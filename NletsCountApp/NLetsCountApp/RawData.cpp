@@ -20,6 +20,7 @@ void RawData::write() {
         std::cout << "    ----> " << elem.second << " puta";
         std::cout << std::endl;
     }
+    std::cout << std::endl;
     for (auto elem : _triplets)
     {
         for (int vecElem : elem.first) {
@@ -28,6 +29,7 @@ void RawData::write() {
         std::cout << "    ----> " << elem.second << " puta";
         std::cout << std::endl;
     }
+    std::cout << std::endl;
     for (auto elem : _quadriples)
     {
         for (int vecElem : elem.first) {
@@ -36,6 +38,7 @@ void RawData::write() {
         std::cout << "    ----> " << elem.second << " puta";
         std::cout << std::endl;
     }
+    std::cout << std::endl;
     for (auto elem : _quantiples)
     {
         for (int vecElem : elem.first) {
