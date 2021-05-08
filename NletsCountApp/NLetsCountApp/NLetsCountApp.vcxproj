@@ -154,6 +154,7 @@
     <ClCompile Include="ExcelData.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="IOManager.cpp" />
+    <ClCompile Include="MathManager.cpp" />
     <ClCompile Include="NLetsCountApp.cpp" />
     <ClCompile Include="RawData.cpp" />
   </ItemGroup>
@@ -161,7 +162,7 @@
     <ClInclude Include="ExcelData.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="IOManager.h" />
-    <ClInclude Include="NLetsCountApp.h" />
+    <ClInclude Include="MathManager.h" />
     <ClInclude Include="RawData.h" />
   </ItemGroup>
   <ItemGroup>

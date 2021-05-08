@@ -21,7 +21,7 @@ std::vector<std::vector<int>> ExcelData::data()
     std::vector<std::vector<int>> excelData;
 
 	if (_book->load(_filePath.c_str())) {
-
+        	
 
 		libxl::Sheet* sheet = _book->getSheet(1);
 
@@ -81,7 +81,7 @@ void ExcelData::write() {
         libxl::Sheet* sheet = _book->getSheet(4); // duplets
         if (sheet) {
 
-            std::multimap<int, std::vector<int>> reverseTest = flip_map(_duplets);
+            std::multimap<int, std::vector<int>> reverseTest = flip_map(duplets);
             /*Contents of flipped map in descending order:*/
             for (std::multimap<int, std::vector<int>>::const_reverse_iterator elem = reverseTest.rbegin(); elem != reverseTest.rend(); ++elem)
             {
@@ -98,7 +98,7 @@ void ExcelData::write() {
         sheet = _book->getSheet(5); // triplets
         if (sheet) {
 
-            std::multimap<int, std::vector<int>> reverseTest = flip_map(_triplets);
+            std::multimap<int, std::vector<int>> reverseTest = flip_map(triplets);
             for (std::multimap<int, std::vector<int>>::const_reverse_iterator elem = reverseTest.rbegin(); elem != reverseTest.rend(); ++elem)
             {
                 currentCol = WriteStartCol;
@@ -114,7 +114,7 @@ void ExcelData::write() {
         sheet = _book->getSheet(6); // quatro
         if (sheet) {
 
-            std::multimap<int, std::vector<int>> reverseTest = flip_map(_quadriples);
+            std::multimap<int, std::vector<int>> reverseTest = flip_map(quadriples);
             for (std::multimap<int, std::vector<int>>::const_reverse_iterator elem = reverseTest.rbegin(); elem != reverseTest.rend(); ++elem)
             {
                 currentCol = WriteStartCol;
@@ -130,7 +130,7 @@ void ExcelData::write() {
         sheet = _book->getSheet(7); // quinto
         if (sheet) {
 
-            std::multimap<int, std::vector<int>> reverseTest = flip_map(_quantiples);
+            std::multimap<int, std::vector<int>> reverseTest = flip_map(quintets);
             for (std::multimap<int, std::vector<int>>::const_reverse_iterator elem = reverseTest.rbegin(); elem != reverseTest.rend(); ++elem)
             {
                 currentCol = WriteStartCol;
@@ -147,7 +147,7 @@ void ExcelData::write() {
     _book->release();
 
     std::cout << std::endl;
-    for (auto elem : _duplets)
+    for (auto elem : duplets)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
@@ -156,7 +156,7 @@ void ExcelData::write() {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    for (auto elem : _triplets)
+    for (auto elem : triplets)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
@@ -165,7 +165,7 @@ void ExcelData::write() {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    for (auto elem : _quadriples)
+    for (auto elem : quadriples)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
@@ -174,7 +174,7 @@ void ExcelData::write() {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    for (auto elem : _quantiples)
+    for (auto elem : quintets)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";

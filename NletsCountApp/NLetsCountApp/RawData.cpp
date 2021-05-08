@@ -12,7 +12,7 @@ std::vector<std::vector<int>> RawData::data()
 }
 void RawData::write() {
     std::cout << std::endl;
-    for (auto elem : _duplets)
+    for (auto elem : duplets)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
@@ -21,7 +21,7 @@ void RawData::write() {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    for (auto elem : _triplets)
+    for (auto elem : triplets)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
@@ -30,7 +30,7 @@ void RawData::write() {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    for (auto elem : _quadriples)
+    for (auto elem : quadriples)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
@@ -39,7 +39,7 @@ void RawData::write() {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-    for (auto elem : _quantiples)
+    for (auto elem : quintets)
     {
         for (int vecElem : elem.first) {
             std::cout << vecElem << " ";
