@@ -8,6 +8,8 @@
 #include "NLetsCountApp.h"
 #include "Factory.h"
 #include "IOManager.h"
+#include<ctime>
+
 bool CombContainedInRow(std::vector<int> komb, std::vector<int> trenutniRedak) {
 
 
@@ -92,6 +94,8 @@ void FillNlets(std::vector<std::vector<int>>& insertedCombinations, std::vector<
 }
 int main()
 {
+    time_t begin, end;
+    time(&begin);
     IOManager* mng = new IOManager();
     Factory* factory = Factory::makeFactory(mng->readFile());
     delete(mng);
@@ -121,7 +125,9 @@ int main()
             FillNlets(kombe4, retci[j], quatrets);
             FillNlets(kombe5, retci[j], quintets);
         }
-        
+        if (i % 50 == 0) {
+            std::cout << double(i) / double(retci.size())*100.0f << "%" << std::endl;
+        }
     }
     FinishingTouches(duplets);
     FinishingTouches(triplets);
@@ -142,7 +148,9 @@ int main()
     factory->setNlet(quintets);
 
     factory->write();
-
+    time(&end);
+    double diff = difftime(end, begin);
+    printf("Vrimena uzelo: %lf minuta\n", diff / 60.0f);
     int d;
     std::cin >> d;
 }

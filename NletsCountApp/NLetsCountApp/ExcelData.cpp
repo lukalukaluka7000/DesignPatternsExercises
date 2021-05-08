@@ -9,11 +9,20 @@
 
 #define WriteStartRow 2
 #define WriteStartCol 2
+
+ExcelData::ExcelData(std::string fileName)
+{
+    _fileName = fileName;
+    std::string fp = "Debug\\" + _fileName;
+    _filePath = std::wstring(fp.begin(), fp.end());
+}
 std::vector<std::vector<int>> ExcelData::data()
 {
     std::vector<std::vector<int>> excelData;
 
-	if (_book->load(L"Debug\\testExcel.xls")) {
+	if (_book->load(_filePath.c_str())) {
+
+
 		libxl::Sheet* sheet = _book->getSheet(1);
 
 		if (sheet) {
@@ -28,14 +37,13 @@ std::vector<std::vector<int>> ExcelData::data()
                         case libxl::CELLTYPE_EMPTY: break;
                         case libxl::CELLTYPE_NUMBER:
                         {
-                            if (excelData.size() == 50) {
+                            if (excelData.size() == 49) {
                                 std::cout << std::endl;
                             }
-                            std::wcout << "(" << row << ", " << col << ") = ";
+                            //std::cout << "(" << row << ", " << col << ") = ";
                             double d = sheet->readNum(row, col);
                             currentRow.push_back(int(d));
-
-                            std::cout << d << " [number]" << std::endl;
+                            //std::cout << d << " [number]" << std::endl;
                             break;
                         }
                         case libxl::CELLTYPE_STRING: break;
@@ -68,9 +76,9 @@ void ExcelData::write() {
     int currentRow = WriteStartRow;
     int currentCol = WriteStartCol;
 
-    if (_book->load(L"Debug\\testExcel.xls")) {
+    if (_book->load(_filePath.c_str())) {
         
-        libxl::Sheet* sheet = _book->getSheet(5); // duplets
+        libxl::Sheet* sheet = _book->getSheet(4); // duplets
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(_duplets);
@@ -87,7 +95,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
 
-        sheet = _book->getSheet(6); // triplets
+        sheet = _book->getSheet(5); // triplets
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(_triplets);
@@ -103,7 +111,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
 
-        sheet = _book->getSheet(7); // quatro
+        sheet = _book->getSheet(6); // quatro
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(_quadriples);
@@ -119,7 +127,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
 
-        sheet = _book->getSheet(8); // quinto
+        sheet = _book->getSheet(7); // quinto
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(_quantiples);
@@ -135,7 +143,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
     }
-    _book->save(L"Debug\\testExcel.xls");
+    _book->save(_filePath.c_str());
     _book->release();
 
     std::cout << std::endl;

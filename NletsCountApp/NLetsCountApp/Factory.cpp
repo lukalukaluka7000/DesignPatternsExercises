@@ -6,7 +6,7 @@ Factory* Factory::makeFactory(int choice)
     if (choice == 1)
         return new RawData;
     else if (choice == 2)
-        return new ExcelData;
+        return new ExcelData("testExcelv0.xls");
 }
 
 void Factory::setNlet(std::map<std::vector<int>, int> Nlet)
