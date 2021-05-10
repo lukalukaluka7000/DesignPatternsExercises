@@ -10,7 +10,7 @@ int IOManager::readFile(std::string filePath )
 	std::ifstream file;
 	file.open(_filePath);
 	if (!file.is_open()) {
-		std::cout << "Could not open config file: " << _filePath <<  std::endl;
+		std::cout << "Ne mogu pronaci config datoteku: " << _filePath <<  std::endl;
 		return -1;
 	}
 	std::string line = "";

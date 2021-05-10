@@ -6,5 +6,5 @@ Factory* Factory::makeFactory(int choice)
     if (choice == 1)
         return new RawData;
     else if (choice == 2)
-        return new ExcelData("testExcelv2_test.xls");
+        return new ExcelData("testExcelv0.xls");
 }

@@ -39,7 +39,7 @@ int main()
         MathManager::CurrentRowWithCombinationsUpdate(factory->quadriples, retci[i]);
         MathManager::CurrentRowWithCombinationsUpdate(factory->quintets, retci[i]);
         
-        if (i % 50 == 0) 
+        if (i % 4 == 0) 
             std::cout << double(i) / double(retci.size()) * 100.0f << "% ..." ;
     }
 
