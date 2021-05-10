@@ -7,34 +7,65 @@ class CommandPattern
     // Uses a single delegate for the single type of commands that the client invokes.
 
     delegate void Invoker();
+    delegate void ParameterInvoker(string komanda);
+
     static Invoker Execute, Undo, Redo;
+    static ParameterInvoker Invoke;
 
     class Command
     {
         public Command(Receiver receiver)
         {
             Execute = receiver.Action;
-            Redo = receiver.Action;
-            Undo = receiver.Reverse;
+            Redo = receiver.ReverseForward;
+            Undo = receiver.ReverseBackward;
+
+            Invoke = receiver.Action;
         }
     }
 
     public class Receiver
     {
         string build, oldbuild;
-        string s = "some string ";
+        string s = "additional string";
+
+        string undodBuild;
+        bool didUndo = false;
 
         public void Action()
         {
             oldbuild = build;
-            build += s;
-            Console.WriteLine("Receiver is adding " + build);
+            build += s; didUndo = false;
+            Console.WriteLine("Receiver ADDING: " + s);
+            Console.WriteLine("Current state: {0}", build);
         }
-
-        public void Reverse()
+        public void ReverseForward()
         {
+            if (didUndo)
+            {
+                build = undodBuild;
+                Console.WriteLine("Receiver REDOing: ");
+                Console.WriteLine("Current state: {0}", build);
+                didUndo = false;
+            }
+            else
+            {
+                Console.WriteLine("Cannot redo if there was no undo...");
+            }
+        }
+        public void ReverseBackward()
+        {
+            undodBuild = build;
             build = oldbuild;
-            Console.WriteLine("Receiver is reverting to " + build);
+            Console.WriteLine("Receiver UNDOing: ");
+            Console.WriteLine("Current state: {0}", build);
+            didUndo = true;
+        }
+        public void Action(string komanda)
+        {
+            oldbuild = build; build += komanda; didUndo = false;
+            Console.WriteLine("Receiver is adding string parameter from client : {0}", komanda);
+            Console.WriteLine("Current state: {0}", build);
         }
     }
 
@@ -45,6 +76,12 @@ class CommandPattern
         Redo();
         Undo();
         Execute();
+
+        Invoke("maci nadodaj mi ovo");
+        Undo();
+        Redo();
+        Undo();
+        Redo();
         Console.ReadKey();
     }
 }
