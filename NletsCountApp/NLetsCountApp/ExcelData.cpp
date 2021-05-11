@@ -11,9 +11,22 @@
 #define WriteStartRow 2
 #define WriteStartCol 2
 
+#define ExcelFormat ".xls"
+
+#define SheetDuplets 2
+#define SheetTriplets 3
+#define SheetQuatrets 4
+#define SheetQuintets 5
+
 ExcelData::ExcelData(std::string fileName)
 {
-    _fileName = fileName;
+    std::string xlsFormat = ExcelFormat;
+
+    _fileName = !std::equal(xlsFormat.rbegin(), 
+                xlsFormat.rend(), 
+                fileName.rbegin()) 
+        ? fileName + ExcelFormat : fileName;
+    
     std::string fp = "Debug\\" + _fileName;
     _filePath = std::wstring(fp.begin(), fp.end());
 }
@@ -25,11 +38,13 @@ std::vector<std::vector<int>> ExcelData::data()
         std::cout << "Ne mogu pronaci excel za otvoriti..." << std::endl;
         exit(-1);
     }
+    std::cout << "Datoteka koju citam: " << _fileName << std::endl;
 
     std::vector<std::vector<int>> excelData;
     
 	if (_book->load(_filePath.c_str())) {
         
+
 		libxl::Sheet* sheet = _book->getSheet(1);
 
 		if (sheet) {
@@ -83,7 +98,7 @@ void ExcelData::write() {
 
     if (_book->load(_filePath.c_str())) {
         
-        libxl::Sheet* sheet = _book->getSheet(2); // duplets
+        libxl::Sheet* sheet = _book->getSheet(SheetDuplets); // duplets
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(duplets);
@@ -100,7 +115,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
 
-        sheet = _book->getSheet(3); // triplets
+        sheet = _book->getSheet(SheetTriplets); // triplets
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(triplets);
@@ -116,7 +131,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
 
-        sheet = _book->getSheet(4); // quatro
+        sheet = _book->getSheet(SheetQuatrets); // quatro
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(quadriples);
@@ -132,7 +147,7 @@ void ExcelData::write() {
             currentRow = WriteStartRow;
         }
 
-        sheet = _book->getSheet(5); // quinto
+        sheet = _book->getSheet(SheetQuintets); // quinto
         if (sheet) {
 
             std::multimap<int, std::vector<int>> reverseTest = flip_map(quintets);

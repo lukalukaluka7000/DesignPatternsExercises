@@ -1,10 +1,10 @@
 #include "Factory.h"
 #include "RawData.h";
 #include "ExcelData.h"
-Factory* Factory::makeFactory(int choice)
+Factory* Factory::makeFactory(std::string fileName)
 {
-    if (choice == 1)
+    if (fileName.find("error") != std::string::npos || fileName.empty())      
         return new RawData;
-    else if (choice == 2)
-        return new ExcelData("testExcelv0.xls");
+    else
+        return new ExcelData(fileName);
 }

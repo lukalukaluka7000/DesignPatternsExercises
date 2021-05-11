@@ -13,7 +13,7 @@ int main()
     time_t begin, end;
     time(&begin);
     IOManager* mng = new IOManager();
-    Factory* factory = Factory::makeFactory(mng->readFile());
+    Factory* factory = Factory::makeFactory(mng->readConfig());
     delete(mng);
 
     std::vector<std::vector<int>> retci = factory->data();

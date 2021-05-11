@@ -1,15 +1,16 @@
 #pragma once
 #include <string>
 #include <map>
+
 class IOManager
 {
 public:
-	int readFile(std::string filePath = ".\\config.txt");
+	std::string readConfig();
 private:
 	enum string_code 
 	{
-		enumRaw,
-		enumExcel
+		Raw,
+		Excel
 	};
 	string_code hashit(std::string const& inString);
 	std::string getValueFromHashMap(std::string option);

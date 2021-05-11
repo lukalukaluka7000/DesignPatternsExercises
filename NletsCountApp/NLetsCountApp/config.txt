@@ -1,1 +1,2 @@
-FetchDataMode=EXCEL
+FetchDataMode = Excel
+FileName = testExcelv0.xls

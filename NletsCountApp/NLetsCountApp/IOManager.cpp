@@ -4,14 +4,17 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
-int IOManager::readFile(std::string filePath )
+#define ConfigName "config.txt"
+#define ConfigFetchMode "FetchDataMode"
+#define ConfigFileName "FileName"
+std::string IOManager::readConfig()
 {
-	_filePath = filePath;
+	std::string _filePath = ConfigName;
 	std::ifstream file;
 	file.open(_filePath);
 	if (!file.is_open()) {
 		std::cout << "Ne mogu pronaci config datoteku: " << _filePath <<  std::endl;
-		return -1;
+		exit(-1);
 	}
 	std::string line = "";
 	while (std::getline(file, line))
@@ -42,21 +45,17 @@ int IOManager::readFile(std::string filePath )
 	}
 
 	//refacgtor this if ther would be more shit in config for now this is acceptable for me
-	std::string choice = getValueFromHashMap("FetchDataMode");
-	switch (hashit(choice)) {
-		case enumRaw:
-			return 1;
-		case enumExcel:
-			return 2;
-	}
-	return -1;
+	std::string mode =	getValueFromHashMap(ConfigFetchMode);
+	if (hashit(mode) == Raw) return "error";
+	else 
+		return getValueFromHashMap(ConfigFileName);
 }
 
 IOManager::string_code IOManager::hashit(std::string const& inString) {
 	if (inString == "raw" || inString == "Raw" ||inString == "RAW") 
-		return enumRaw;
+		return Raw;
 	if (inString == "excel" || inString == "Excel" || inString == "EXCEL") 
-		return enumExcel;
+		return Excel;
 }
 std::string IOManager::getValueFromHashMap(std::string option)
 {
