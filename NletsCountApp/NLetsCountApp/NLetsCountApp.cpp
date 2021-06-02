@@ -41,6 +41,7 @@ int main()
         
         if (i % 4 == 0) 
             std::cout << double(i) / double(retci.size()) * 100.0f << "% ..." ;
+
     }
 
     factory->write();

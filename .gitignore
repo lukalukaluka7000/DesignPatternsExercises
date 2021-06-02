@@ -14,6 +14,9 @@
 
 # Build results
 Debug
+Release
+NletsCountApp/NletsCountApp/Release
+NletsCountApp/NletsCountApp/x64
 NletsCountApp/NletsCountApp/Debug
 NletsCountApp/NletsCountApp/deps
 [Dd]ebug/

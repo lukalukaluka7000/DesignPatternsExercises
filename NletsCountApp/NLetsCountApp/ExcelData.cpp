@@ -1,5 +1,5 @@
 #include "ExcelData.h"
-#include "libxl.h";
+#include "libxl.h"
 #include<iostream>
 #include <string>
 #include<fstream>
@@ -27,7 +27,7 @@ ExcelData::ExcelData(std::string fileName)
                 fileName.rbegin()) 
         ? fileName + ExcelFormat : fileName;
     
-    std::string fp = "Debug\\" + _fileName;
+    std::string fp = "Datoteke\\" + _fileName;
     _filePath = std::wstring(fp.begin(), fp.end());
 }
 
@@ -44,9 +44,8 @@ std::vector<std::vector<int>> ExcelData::data()
     
 	if (_book->load(_filePath.c_str())) {
         
-
 		libxl::Sheet* sheet = _book->getSheet(1);
-
+        
 		if (sheet) {
 
 			for (int row = FirstRowData; row < sheet->lastRow(); ++row) {
